@@ -1,0 +1,6 @@
+{
+  "name": "GM English — منصة تعليم الإنجليزية للأطفال",
+  "description": "تطبيق تعليمي تفاعلي واحترافي للأطفال لتعلم الحروف والأرقام والكلمات والألعاب والقصص ونطق الكلمات بالذكاء الاصطناعي مع لوحة تحكم وإدارة كاملة.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

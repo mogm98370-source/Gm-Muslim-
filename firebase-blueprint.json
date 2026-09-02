@@ -1,0 +1,48 @@
+{
+  "entities": {
+    "users": {
+      "title": "User",
+      "description": "User account containing child profile, parent settings, and learning stats",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "childName": { "type": "string" },
+        "childAge": { "type": "number" },
+        "childAvatar": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin", "super_admin"] },
+        "isPremium": { "type": "boolean" },
+        "premiumExpiresAt": { "type": "string" },
+        "stars": { "type": "number" },
+        "points": { "type": "number" },
+        "level": { "type": "number" },
+        "completedLessons": { "type": "array" },
+        "learnedLetters": { "type": "array" },
+        "learnedWords": { "type": "array" },
+        "badges": { "type": "array" },
+        "parentPin": { "type": "string" },
+        "dailyStreak": { "type": "number" },
+        "totalMinutes": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["email", "childName"]
+    },
+    "letters": {
+      "title": "Letter Lesson",
+      "description": "Alphabet letters A-Z educational data",
+      "properties": {
+        "letter": { "type": "string" },
+        "lowercase": { "type": "string" },
+        "word": { "type": "string" },
+        "arabicWord": { "type": "string" },
+        "image": { "type": "string" },
+        "pronunciation": { "type": "string" },
+        "exampleSentence": { "type": "string" },
+        "arabicSentence": { "type": "string" },
+        "strokes": { "type": "array" },
+        "isPremium": { "type": "boolean" }
+      }
+    }
+  }
+}

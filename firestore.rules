@@ -1,0 +1,125 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isSuperAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email.lower() == 'larblaablaybla@gmail.com' ||
+        request.auth.uid == 'larblaablaybla@gmail.com'
+      );
+    }
+    
+    function isAdmin() {
+      return isSuperAdmin();
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && (request.auth.uid == userId || isSuperAdmin());
+    }
+
+    // Public readable educational content
+    match /letters/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+    
+    match /numbers/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+    
+    match /colors/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+    
+    match /animals/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+    
+    match /fruits/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+    
+    match /shapes/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+    
+    match /bodyParts/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+    
+    match /words/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+    
+    match /sentences/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+    
+    match /stories/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+    
+    match /songs/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+    
+    match /games/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+    
+    match /plans/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+    
+    match /appSettings/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+    
+    match /dailyChallenges/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+
+    // User profiles & progress
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isSuperAdmin();
+      allow create: if isAuthenticated() && (request.auth.uid == userId || isSuperAdmin());
+      allow update: if isOwner(userId) || isSuperAdmin();
+      allow delete: if isSuperAdmin();
+
+      match /{document=**} {
+        allow read, write: if isOwner(userId) || isSuperAdmin();
+      }
+    }
+
+    // Subscriptions
+    match /subscriptions/{subId} {
+      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || isSuperAdmin());
+      allow write: if isSuperAdmin() || (isAuthenticated() && request.resource.data.userId == request.auth.uid);
+    }
+    
+    // System audit & logs
+    match /auditLogs/{logId} {
+      allow read: if isSuperAdmin();
+      allow create: if isAuthenticated();
+      allow update, delete: if isSuperAdmin();
+    }
+  }
+}
